@@ -1,5 +1,6 @@
-from pathlib import Path
 import os
+from pathlib import Path
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -35,7 +36,8 @@ INSTALLED_APPS = [
 
 # My Apps
 INSTALLED_APPS += [
-    "account"
+    "account",
+    "shopping"
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True # TODO: Change it when our frontend dev get a url

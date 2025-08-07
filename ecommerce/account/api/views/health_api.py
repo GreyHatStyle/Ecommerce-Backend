@@ -1,4 +1,6 @@
-from ._base import BaseAPIView, Request, Response, status, api_exception_handler
+from ._base import (BaseAPIView, Request, Response, api_exception_handler,
+                    status)
+
 
 class HealthAPI(BaseAPIView):
     """

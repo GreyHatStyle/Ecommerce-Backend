@@ -1,8 +1,14 @@
 import uuid
-from datetime import date
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+
+
+class AddressTypeChoices(models.TextChoices):
+    HOME = "Home"
+    WORK = "Work"
+    OTHER = "Other"
 
 class User(AbstractUser):
      # Reference: https://tomharrisonjr.com/uuid-or-guid-as-primary-keys-be-careful-7b2aa3dcb439
@@ -17,8 +23,8 @@ class User(AbstractUser):
         "phone_no",
     ]
     
-    class meta:
-        db_table = "User_Data"
+    class Meta:
+        db_table = "Users"
 
 
 class UserAddress(models.Model):
@@ -31,11 +37,11 @@ class UserAddress(models.Model):
     # Assuming international users
     pincode = models.CharField(max_length=32, null=False, blank=False)
     
-    address_type = models.CharField(max_length=20, choices=[
-        ('HOME', 'Home'),
-        ('WORK', 'Work'),
-        ('OTHER', 'Other')
-    ], default='HOME')
+    address_type = models.CharField(
+        max_length=20, 
+        choices=AddressTypeChoices.choices, 
+        default=AddressTypeChoices.HOME,
+    )
     
     main_address = models.CharField(max_length=300, null=False, blank=False)
     city = models.CharField(max_length=30, null=False, blank=False)
@@ -49,4 +55,5 @@ class UserAddress(models.Model):
     def __str__(self):
         return f"{self.user.username} -> {self.address_type} -> {self.main_address[:20]}"
     
-    
+    class Meta:
+        db_table = "UserAddress"

@@ -1,10 +1,11 @@
-from rest_framework.views import APIView
+import logging
+
+from rest_framework import status
+from rest_framework.permissions import AllowAny
+from rest_framework.renderers import JSONRenderer
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.renderers import JSONRenderer
-from rest_framework.permissions import AllowAny
-from rest_framework import status
-import logging
+from rest_framework.views import APIView
 
 logger = logging.getLogger(__name__)
 
