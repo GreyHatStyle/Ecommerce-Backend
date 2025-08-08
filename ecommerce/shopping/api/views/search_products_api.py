@@ -4,6 +4,7 @@ from shopping.models import Product
 from shopping.utils import ProductRecommendationUtil
 
 from .._serializers import ProductSerializer, ValidateSearchQuery
+from ..throttles import BurstRateThrottle, SustainedRateThrottle
 from ._base import (BaseAPIView, Request, Response, api_exception_handler,
                     status)
 
@@ -13,6 +14,7 @@ class SearchProductsAPI(BaseAPIView):
     Returns `n` number of products using recommendation system
     """
     recommendation = ProductRecommendationUtil()
+    throttle_classes = [BurstRateThrottle, SustainedRateThrottle]
     
     @api_exception_handler
     def post(self, request: Request, count: int) -> Response:

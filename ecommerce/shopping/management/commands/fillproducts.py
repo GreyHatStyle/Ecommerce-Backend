@@ -4,6 +4,7 @@ from typing import List
 from django.core.management.base import BaseCommand, CommandParser
 
 from shopping.models import Product
+from shopping.utils import ProductRecommendationUtil
 
 
 class Command(BaseCommand):
@@ -18,6 +19,8 @@ class Command(BaseCommand):
         
     def handle(self, *args, **kwargs) -> str | None:
         csv_file = kwargs['csv_file']
+        util = ProductRecommendationUtil()
+        
         
         if csv_file is None:
             self.stderr.write(self.style.ERROR("Path to csv file not given"))
@@ -30,11 +33,13 @@ class Command(BaseCommand):
                 reader = csv.DictReader(file)
                 
                 for row in reader:
+                    cluster = util.predict_cluster_number(row['description'])
                     product = Product(
                         title=row['title'],
                         description=row['description'],
                         price=row['price'],
                         stock=row['stocks'],
+                        recommendation_cluster=cluster,
                     )
                     
                     products_to_create.append(product)
