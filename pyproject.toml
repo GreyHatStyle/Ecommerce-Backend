@@ -13,9 +13,11 @@ dependencies = [
     "djangorestframework>=3.16.1",
     "djangorestframework-simplejwt>=5.5.1",
     "logtail-python>=0.3.3",
+    "pandas>=2.3.1",
     "psycopg2-binary>=2.9.10",
     "pydantic>=2.11.7",
     "python-dotenv>=1.1.1",
+    "scikit-learn>=1.7.1",
 ]
 
 [dependency-groups]

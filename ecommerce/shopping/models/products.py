@@ -10,6 +10,9 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=3)
     stock = models.PositiveIntegerField()
     
+    # Model will assign cluster number here
+    recommendation_cluster = models.PositiveIntegerField(null=True, blank=True)
+    
     # Will store bucket URLs here
     image_url = models.URLField(max_length=500, blank=True, null=True)
 
