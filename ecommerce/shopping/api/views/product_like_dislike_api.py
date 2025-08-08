@@ -2,6 +2,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from shopping.models import Product, UserProductReview
 
+from ..throttles import BurstRateThrottle, SustainedRateThrottle
 from ._base import BaseAPIView, Response, status
 
 
@@ -10,6 +11,7 @@ class ProductReviewAPI(BaseAPIView):
     API to handle user likes/dislikes on products
     """
     permission_classes = [IsAuthenticated]
+    throttle_classes = [BurstRateThrottle, SustainedRateThrottle]
     
     def post(self, request):
         reaction_type = request.data.get('reaction')

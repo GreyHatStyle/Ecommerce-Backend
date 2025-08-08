@@ -1,8 +1,9 @@
 import uuid
 
 from django.db import models
+from django.db.models import F, Sum
 
-from account.models import User
+from account.models import User, UserAddress
 
 from .products import Product
 
@@ -21,7 +22,9 @@ class PaymentChoices(models.TextChoices):
 class Order(models.Model):
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-        
+    
+    # Will store snap shot of ordered address, just in case if current user address is changed
+    delivery_address = models.TextField(null=True, blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -38,6 +41,13 @@ class Order(models.Model):
     )
 
     products = models.ManyToManyField(Product, through="OrderItem", related_name='orders')
+    
+    @property
+    def total_price(self):
+        total = self.items.aggregate(
+            total=Sum(F("price") * F("quantity"))
+        )['total']
+        return total if total else 0
     
     def __str__(self):
         return f"Order {self.order_id} : by {self.user.username}"

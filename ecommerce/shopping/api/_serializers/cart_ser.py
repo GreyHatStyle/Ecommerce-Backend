@@ -1,6 +1,7 @@
+from django.db.models import Sum
 from rest_framework import serializers
 
-from shopping.models import CartItems, Product
+from shopping.models import Cart, CartItems, Product
 
 from .search_product_ser import ProductSerializer
 
@@ -24,8 +25,14 @@ class CartValidate(serializers.Serializer):
             raise serializers.ValidationError("Product not found")
         return value
     
-    
-    
+
+class CartSerializer(serializers.ModelSerializer):
+    total_price = serializers.ReadOnlyField()
+    class Meta:
+        model = Cart
+        fields = ["total_price",]    
+
+ 
 class CartItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)
     

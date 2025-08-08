@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.db.models import Sum
 
 from account.models import User
 
@@ -13,6 +14,14 @@ class Cart(models.Model):
     
     def __str__(self) -> str:
         return f"{self.user.username}'s Cart"
+    
+    @property
+    def total_price(self):
+        value = self.items.aggregate(
+            total=Sum("product__price"),
+        )['total']
+        
+        return value if value else 0
     
     class Meta:
         db_table = "Cart"

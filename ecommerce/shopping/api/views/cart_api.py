@@ -4,7 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 
 from shopping.models import Cart, CartItems, Product
 
-from .._serializers import CartItemSerializer, CartValidate
+from .._serializers import CartItemSerializer, CartSerializer, CartValidate
+from ..throttles import BurstRateThrottle, SustainedRateThrottle
 from ._base import (BaseAPIView, Request, Response, api_exception_handler,
                     status)
 
@@ -14,6 +15,7 @@ class CartAPI(BaseAPIView):
     API to add/remove products from user's cart
     """
     permission_classes = [IsAuthenticated]
+    throttle_classes = [BurstRateThrottle, SustainedRateThrottle]
     
     @api_exception_handler
     def post(self, request: Request) -> Response:
@@ -112,12 +114,14 @@ class CartAPI(BaseAPIView):
             cart = Cart.objects.get(user=request.user)
             cart_items = CartItems.objects.filter(cart=cart).select_related('product')
             
-            serializer = CartItemSerializer(cart_items, many=True)
+            c_serializer = CartSerializer(cart)
+            ci_serializer = CartItemSerializer(cart_items, many=True)
             
             return Response({
                 "status": "success",
-                "cart_items": serializer.data,
-                "total_items": len(serializer.data)
+                "cart": c_serializer.data,
+                "total_items": len(ci_serializer.data),
+                "cart_items": ci_serializer.data,
             }, status=status.HTTP_200_OK)
             
         except Cart.DoesNotExist:
