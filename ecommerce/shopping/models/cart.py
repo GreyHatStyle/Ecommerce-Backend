@@ -1,7 +1,8 @@
 import uuid
 
-from account.models import User
 from django.db import models
+
+from account.models import User
 
 from .products import Product
 

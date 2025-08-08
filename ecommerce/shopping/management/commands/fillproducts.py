@@ -2,6 +2,7 @@ import csv
 from typing import List
 
 from django.core.management.base import BaseCommand, CommandParser
+
 from shopping.models import Product
 
 

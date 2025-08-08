@@ -6,7 +6,7 @@ dist/
 wheels/
 *.egg-info
 
-# Todos
+# Personal things
 TODO.md
 
 # Virtual environments
