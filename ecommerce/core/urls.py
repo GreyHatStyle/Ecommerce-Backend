@@ -10,4 +10,5 @@ urlpatterns = [
 # Custom Apps url
 urlpatterns += [
     path('account/', include('account.urls')),
+    path('shopping/', include('shopping.urls')),
 ]

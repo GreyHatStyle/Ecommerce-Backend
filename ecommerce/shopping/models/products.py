@@ -21,6 +21,20 @@ class Product(models.Model):
     def in_stock(self):
         return self.stock > 0
     
+    @property
+    def like_count(self):
+        return self.user_review.filter(reaction='LIKE').count()
+    
+    @property
+    def dislike_count(self):
+        return self.user_review.filter(reaction='DISLIKE').count()
+    
+    @property
+    def net_likes(self):
+        """Returns likes minus dislikes for sorting"""
+        return self.like_count - self.dislike_count
+    
+    
     def __str__(self):
         return self.title
     
