@@ -1,0 +1,277 @@
+openapi: 3.0.3
+info:
+  title: E-commerce Backend APIs
+  version: 1.0.0
+  description: This is backed API documentation for RestAPIs that handles the E-Commerce
+    frontend website
+paths:
+  /account/api/address/:
+    get:
+      operationId: account_api_address_retrieve
+      description: API to manage user addresses - create, list, update, delete
+      tags:
+      - account
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: account_api_address_create
+      description: API to manage user addresses - create, list, update, delete
+      tags:
+      - account
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /account/api/address/{address_id}/:
+    get:
+      operationId: account_api_address_retrieve_2
+      description: API to manage individual address - get, update, delete
+      parameters:
+      - in: path
+        name: address_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - account
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    put:
+      operationId: account_api_address_update
+      description: API to manage individual address - get, update, delete
+      parameters:
+      - in: path
+        name: address_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - account
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    delete:
+      operationId: account_api_address_destroy
+      description: API to manage individual address - get, update, delete
+      parameters:
+      - in: path
+        name: address_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - account
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /account/api/health/:
+    get:
+      operationId: account_api_health_retrieve
+      description: Health API to confirm if DRF working or not.
+      tags:
+      - account
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /account/api/login/:
+    post:
+      operationId: account_api_login_create
+      description: API class to help user to login, and obtain JWT access and refresh
+        tokens.
+      tags:
+      - account
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /account/api/token/refresh/:
+    post:
+      operationId: account_api_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /shopping/api/cart/:
+    get:
+      operationId: shopping_api_cart_retrieve
+      description: API to add/remove products from user's cart
+      tags:
+      - shopping
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: shopping_api_cart_create
+      description: API to add/remove products from user's cart
+      tags:
+      - shopping
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    delete:
+      operationId: shopping_api_cart_destroy
+      description: API to add/remove products from user's cart
+      tags:
+      - shopping
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /shopping/api/order/:
+    get:
+      operationId: shopping_api_order_retrieve
+      description: API to create orders from cart items
+      tags:
+      - shopping
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: shopping_api_order_create
+      description: API to create orders from cart items
+      tags:
+      - shopping
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /shopping/api/product/{prod_id}/:
+    get:
+      operationId: shopping_api_product_retrieve
+      parameters:
+      - in: path
+        name: prod_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - shopping
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /shopping/api/product/home/{count}/:
+    get:
+      operationId: shopping_api_product_home_retrieve
+      description: API to get the most liked products for the home page
+      parameters:
+      - in: path
+        name: count
+        schema:
+          type: integer
+        required: true
+      tags:
+      - shopping
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /shopping/api/product/review/:
+    post:
+      operationId: shopping_api_product_review_create
+      description: API to handle user likes/dislikes on products
+      tags:
+      - shopping
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    delete:
+      operationId: shopping_api_product_review_destroy
+      description: Remove user's reaction
+      tags:
+      - shopping
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /shopping/api/product/search/{count}/:
+    post:
+      operationId: shopping_api_product_search_create
+      description: Returns `n` number of products using recommendation system
+      parameters:
+      - in: path
+        name: count
+        schema:
+          type: integer
+        required: true
+      tags:
+      - shopping
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+components:
+  schemas:
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+      required:
+      - access
+      - refresh
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

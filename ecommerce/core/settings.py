@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", False)
 
 ALLOWED_HOSTS = ['*'] # TODO: Change this also when frontend url is here
 AUTH_USER_MODEL = 'account.User'
@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    'drf_spectacular',
 ]
 
 # My Apps
@@ -195,6 +196,15 @@ REST_FRAMEWORK = {
     #     'burst': '2/second',
     #     'sustained': '1000/day'
     # }
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema','DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'E-commerce Backend APIs',
+    'DESCRIPTION': 'This is backed API documentation for RestAPIs that handles the E-Commerce frontend website',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
 }
 
 SIMPLE_JWT = {

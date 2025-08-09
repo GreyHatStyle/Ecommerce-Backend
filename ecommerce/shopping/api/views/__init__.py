@@ -3,3 +3,4 @@ from .home_products_api import HomeProductsAPI
 from .order_api import OrderAPI
 from .product_like_dislike_api import ProductReviewAPI
 from .search_products_api import SearchProductsAPI
+from .get_product import GetProductAPI
