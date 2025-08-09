@@ -1,6 +1,6 @@
 # ManasEcomStore
 This project is a headless e-commerce backend built with Django and Django REST Framework (DRF).
-It provides a complete set  RestAPIs that are used by separate React + Vite + TypeScript frontend.
+It provides a complete set of RestAPIs that are used by a separate React + Vite + TypeScript frontend.
 
 - Headless Website - 
     - *Frontend* is deployed in **Vercel**.
@@ -19,9 +19,9 @@ It provides a complete set  RestAPIs that are used by separate React + Vite + Ty
 
 ## Features
 - Supports **JWT Authentication system**, with Refresh token rotation.
-- Uses Kmeans Cluster based recommendation model in Search engine.
+- Uses K-means clustering-based recommendation model in a Search engine.
 - Uses **Django Rest Frameworks** to define RestAPI endpoints.
-- It has scalable design.
+- It has a scalable design.
 
 ## Api Documentation
 For reviewing RestAPIs visit https://knozifies.live/
